@@ -1,8 +1,8 @@
 package de.inkvine.dota2stats;
 
-import de.inkvine.dota2stats.domain.MatchDetail;
-import de.inkvine.dota2stats.domain.MatchHistory;
 import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter;
+import de.inkvine.dota2stats.domain.matchdetail.MatchDetail;
+import de.inkvine.dota2stats.domain.matchhistory.MatchHistory;
 
 public interface Dota2Stats {
 

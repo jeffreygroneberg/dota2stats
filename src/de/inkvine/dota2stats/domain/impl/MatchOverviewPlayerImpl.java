@@ -2,16 +2,16 @@ package de.inkvine.dota2stats.domain.impl;
 
 import java.util.Map;
 
-import de.inkvine.dota2stats.domain.Player;
+import de.inkvine.dota2stats.domain.MatchOverviewPlayer;
 
-public class PlayerImpl implements Player {
+public class MatchOverviewPlayerImpl implements MatchOverviewPlayer {
 
 	private static final String KEY_ACCOUNT_ID = "account_id";
 	private static final String KEY_PLAYER_SLOT = "player_slot";
 	private static final String KEY_HERO_ID = "hero_id";
 	private Map<String, Object> jsonMap;
 
-	public PlayerImpl(Map<String, Object> jsonMap) {
+	public MatchOverviewPlayerImpl(Map<String, Object> jsonMap) {
 
 		this.jsonMap = jsonMap;
 

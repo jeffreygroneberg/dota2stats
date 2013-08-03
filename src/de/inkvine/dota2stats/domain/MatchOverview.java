@@ -2,9 +2,9 @@ package de.inkvine.dota2stats.domain;
 
 import java.util.List;
 
-public interface Match {
+public interface MatchOverview {
 
-	public List<Player> getPlayers();
+	public List<MatchOverviewPlayer> getPlayers();
 
 	public double getMatchId();
 

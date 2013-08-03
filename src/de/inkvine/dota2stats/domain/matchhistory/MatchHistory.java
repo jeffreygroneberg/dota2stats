@@ -1,6 +1,8 @@
-package de.inkvine.dota2stats.domain;
+package de.inkvine.dota2stats.domain.matchhistory;
 
 import java.util.List;
+
+import de.inkvine.dota2stats.domain.MatchOverview;
 
 public interface MatchHistory {
 
@@ -12,6 +14,6 @@ public interface MatchHistory {
 
 	public Number getResultsRemaining();
 
-	public List<Match> getMatches();
+	public List<MatchOverview> getMatchOverviews();
 
 }

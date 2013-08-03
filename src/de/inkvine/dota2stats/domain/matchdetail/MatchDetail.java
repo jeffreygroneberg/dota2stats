@@ -1,5 +1,6 @@
-package de.inkvine.dota2stats.domain;
+package de.inkvine.dota2stats.domain.matchdetail;
 
+import de.inkvine.dota2stats.domain.MatchOverview;
 import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter.GameMode;
 
 public interface MatchDetail {
@@ -10,7 +11,7 @@ public interface MatchDetail {
 
 	public Number getDurationOfMatch();
 
-	public Match getMatchOverview();
+	public MatchOverview getMatchOverview();
 
 	public Number getFirstBloodTime();
 

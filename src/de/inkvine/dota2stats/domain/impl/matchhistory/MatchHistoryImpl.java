@@ -1,11 +1,12 @@
-package de.inkvine.dota2stats.domain.impl;
+package de.inkvine.dota2stats.domain.impl.matchhistory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.inkvine.dota2stats.domain.Match;
-import de.inkvine.dota2stats.domain.MatchHistory;
+import de.inkvine.dota2stats.domain.MatchOverview;
+import de.inkvine.dota2stats.domain.impl.MatchOverviewImpl;
+import de.inkvine.dota2stats.domain.matchhistory.MatchHistory;
 
 public class MatchHistoryImpl implements MatchHistory {
 
@@ -49,14 +50,14 @@ public class MatchHistoryImpl implements MatchHistory {
 	}
 
 	@Override
-	public List<Match> getMatches() {
+	public List<MatchOverview> getMatchOverviews() {
 
 		List<Map<String, Object>> matches = (List<Map<String, Object>>) jsonMap
 				.get("matches");
 
-		List<Match> returnableMatches = new ArrayList<Match>();
+		List<MatchOverview> returnableMatches = new ArrayList<MatchOverview>();
 		for (Map<String, Object> item : matches)
-			returnableMatches.add(new MatchImpl(item));
+			returnableMatches.add(new MatchOverviewImpl(item));
 
 		return returnableMatches;
 

@@ -1,10 +1,11 @@
-package de.inkvine.dota2stats.domain.impl;
+package de.inkvine.dota2stats.domain.impl.matchdetail;
 
 import java.util.Map;
 
-import de.inkvine.dota2stats.domain.Match;
-import de.inkvine.dota2stats.domain.MatchDetail;
+import de.inkvine.dota2stats.domain.MatchOverview;
 import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter.GameMode;
+import de.inkvine.dota2stats.domain.impl.MatchOverviewImpl;
+import de.inkvine.dota2stats.domain.matchdetail.MatchDetail;
 
 public class MatchDetailImpl implements MatchDetail {
 
@@ -45,9 +46,9 @@ public class MatchDetailImpl implements MatchDetail {
 	}
 
 	@Override
-	public Match getMatchOverview() {
+	public MatchOverview getMatchOverview() {
 
-		return new MatchImpl(jsonMap);
+		return new MatchOverviewImpl(jsonMap);
 
 	}
 

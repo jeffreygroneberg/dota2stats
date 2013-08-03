@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.inkvine.dota2stats.domain.Match;
-import de.inkvine.dota2stats.domain.Player;
+import de.inkvine.dota2stats.domain.MatchOverview;
+import de.inkvine.dota2stats.domain.MatchOverviewPlayer;
 
-class MatchImpl implements Match {
+public class MatchOverviewImpl implements MatchOverview {
 
 	private static final Object KEY_MATCH_ID = "match_id";
 	private static final Object KEY_MATCH_SEQ_NUM = "match_seq_num";
 	private static final Object KEY_START_TIME = "start_time";
 	private static final Object KEY_LOBBY_TYPE = "lobby_type";
 
-	MatchImpl(Map<String, Object> jsonMap) {
+	public MatchOverviewImpl(Map<String, Object> jsonMap) {
 
 		super();
 		this.jsonMap = jsonMap;
@@ -24,14 +24,14 @@ class MatchImpl implements Match {
 	private Map<String, Object> jsonMap;
 
 	@Override
-	public List<Player> getPlayers() {
+	public List<MatchOverviewPlayer> getPlayers() {
 
 		List<Map<String, Object>> players = (List<Map<String, Object>>) jsonMap
 				.get("players");
 
-		List<Player> returnablePlayers = new ArrayList<Player>();
+		List<MatchOverviewPlayer> returnablePlayers = new ArrayList<MatchOverviewPlayer>();
 		for (Map<String, Object> item : players)
-			returnablePlayers.add(new PlayerImpl(item));
+			returnablePlayers.add(new MatchOverviewPlayerImpl(item));
 
 		return returnablePlayers;
 

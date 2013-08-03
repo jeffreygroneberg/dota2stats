@@ -15,12 +15,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import de.inkvine.dota2stats.Dota2Stats;
-import de.inkvine.dota2stats.domain.MatchDetail;
-import de.inkvine.dota2stats.domain.MatchHistory;
 import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter;
 import de.inkvine.dota2stats.domain.filter.QueryStringBuilder;
-import de.inkvine.dota2stats.domain.impl.MatchDetailImpl;
-import de.inkvine.dota2stats.domain.impl.MatchHistoryImpl;
+import de.inkvine.dota2stats.domain.impl.matchdetail.MatchDetailImpl;
+import de.inkvine.dota2stats.domain.impl.matchhistory.MatchHistoryImpl;
+import de.inkvine.dota2stats.domain.matchdetail.MatchDetail;
+import de.inkvine.dota2stats.domain.matchhistory.MatchHistory;
 
 public class Dota2StatsImpl implements Dota2Stats {
 

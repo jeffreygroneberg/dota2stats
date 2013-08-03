@@ -1,6 +1,6 @@
 package de.inkvine.dota2stats.domain;
 
-public interface Player {
+public interface MatchOverviewPlayer {
 
 	public Number getAccountId();
 
