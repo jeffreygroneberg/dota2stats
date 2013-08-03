@@ -1,4 +1,4 @@
-package de.inkvine.dotakdratio.result.getmatchhistory;
+package de.inkvine.dota2stats.result.getmatchhistory;
 
 import java.util.Date;
 import java.util.List;

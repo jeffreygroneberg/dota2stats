@@ -1,4 +1,4 @@
-package de.inkvine.dotakdratio.impl;
+package de.inkvine.dota2stats.impl;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,13 +14,13 @@ import org.apache.http.util.EntityUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import de.inkvine.dotakdratio.Dota2Stats;
-import de.inkvine.dotakdratio.domain.MatchDetail;
-import de.inkvine.dotakdratio.domain.MatchHistory;
-import de.inkvine.dotakdratio.domain.filter.MatchHistoryFilter;
-import de.inkvine.dotakdratio.domain.filter.QueryStringBuilder;
-import de.inkvine.dotakdratio.domain.impl.MatchDetailImpl;
-import de.inkvine.dotakdratio.domain.impl.MatchHistoryImpl;
+import de.inkvine.dota2stats.Dota2Stats;
+import de.inkvine.dota2stats.domain.MatchDetail;
+import de.inkvine.dota2stats.domain.MatchHistory;
+import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter;
+import de.inkvine.dota2stats.domain.filter.QueryStringBuilder;
+import de.inkvine.dota2stats.domain.impl.MatchDetailImpl;
+import de.inkvine.dota2stats.domain.impl.MatchHistoryImpl;
 
 public class Dota2StatsImpl implements Dota2Stats {
 

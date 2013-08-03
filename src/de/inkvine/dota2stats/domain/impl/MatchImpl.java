@@ -1,11 +1,11 @@
-package de.inkvine.dotakdratio.domain.impl;
+package de.inkvine.dota2stats.domain.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.inkvine.dotakdratio.domain.Match;
-import de.inkvine.dotakdratio.domain.Player;
+import de.inkvine.dota2stats.domain.Match;
+import de.inkvine.dota2stats.domain.Player;
 
 class MatchImpl implements Match {
 

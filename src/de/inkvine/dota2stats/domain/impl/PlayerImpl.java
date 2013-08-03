@@ -1,8 +1,8 @@
-package de.inkvine.dotakdratio.domain.impl;
+package de.inkvine.dota2stats.domain.impl;
 
 import java.util.Map;
 
-import de.inkvine.dotakdratio.domain.Player;
+import de.inkvine.dota2stats.domain.Player;
 
 public class PlayerImpl implements Player {
 

@@ -1,4 +1,4 @@
-package de.inkvine.dotakdratio.domain.filter;
+package de.inkvine.dota2stats.domain.filter;
 
 import java.util.ArrayList;
 import java.util.List;

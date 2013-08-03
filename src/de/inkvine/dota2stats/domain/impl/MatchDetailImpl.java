@@ -1,10 +1,10 @@
-package de.inkvine.dotakdratio.domain.impl;
+package de.inkvine.dota2stats.domain.impl;
 
 import java.util.Map;
 
-import de.inkvine.dotakdratio.domain.Match;
-import de.inkvine.dotakdratio.domain.MatchDetail;
-import de.inkvine.dotakdratio.domain.filter.MatchHistoryFilter.GameMode;
+import de.inkvine.dota2stats.domain.Match;
+import de.inkvine.dota2stats.domain.MatchDetail;
+import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter.GameMode;
 
 public class MatchDetailImpl implements MatchDetail {
 

@@ -1,6 +1,6 @@
-package de.inkvine.dotakdratio.domain;
+package de.inkvine.dota2stats.domain;
 
-import de.inkvine.dotakdratio.domain.filter.MatchHistoryFilter.GameMode;
+import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter.GameMode;
 
 public interface MatchDetail {
 
