@@ -5,8 +5,7 @@ import java.util.List;
 import de.inkvine.dota2stats.domain.LeaverStatus;
 import de.inkvine.dota2stats.domain.MatchOverviewPlayer;
 
-public interface MatchDetailPlayer extends MatchOverviewPlayer {
-	
+public interface MatchDetailPlayer extends MatchOverviewPlayer {	
 	
 	public List<Item> getItems();
 

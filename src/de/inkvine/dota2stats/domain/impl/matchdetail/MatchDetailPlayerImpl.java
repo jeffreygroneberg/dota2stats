@@ -60,7 +60,7 @@ public class MatchDetailPlayerImpl extends MatchOverviewPlayerImpl implements
 
 	@Override
 	public int getKills() {
-		int kills =   (Integer) jsonMap.get(KEY_KILLS);
+		int kills = (Integer) jsonMap.get(KEY_KILLS);
 		return kills;
 	}
 
