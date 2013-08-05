@@ -6,12 +6,12 @@ public interface MatchOverview {
 
 	public List<MatchOverviewPlayer> getPlayers();
 
-	public double getMatchId();
+	public long getMatchId();
 
-	public double getMatchSeqNumber();
+	public long getMatchSeqNumber();
 
 	public long getStartTime();
 
-	public double getLobbyType();
+	public int getLobbyType();
 
 }

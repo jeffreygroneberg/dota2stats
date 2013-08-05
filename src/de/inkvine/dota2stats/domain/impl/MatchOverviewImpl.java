@@ -38,15 +38,15 @@ public class MatchOverviewImpl implements MatchOverview {
 	}
 
 	@Override
-	public double getMatchId() {
+	public long getMatchId() {
 		// TODO Auto-generated method stub
-		return  (Double) jsonMap.get(KEY_MATCH_ID);
+		return  ((Double) jsonMap.get(KEY_MATCH_ID)).longValue();
 	}
 
 	@Override
-	public double getMatchSeqNumber() {
+	public long getMatchSeqNumber() {
 		// TODO Auto-generated method stub
-		return (Double) jsonMap.get(KEY_MATCH_SEQ_NUM);
+		return ((Double) jsonMap.get(KEY_MATCH_SEQ_NUM)).longValue();
 	}
 
 	@Override
@@ -56,9 +56,9 @@ public class MatchOverviewImpl implements MatchOverview {
 	}
 
 	@Override
-	public double getLobbyType() {
+	public int getLobbyType() {
 		// TODO Auto-generated method stub
-		return (Double) jsonMap.get(KEY_LOBBY_TYPE);
+		return ((Double) jsonMap.get(KEY_LOBBY_TYPE)).intValue();
 	}
 
 	@Override

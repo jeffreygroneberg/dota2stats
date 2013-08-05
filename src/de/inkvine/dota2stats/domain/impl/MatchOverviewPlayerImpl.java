@@ -18,22 +18,22 @@ public class MatchOverviewPlayerImpl implements MatchOverviewPlayer {
 	}
 
 	@Override
-	public Number getAccountId() {
+	public long getAccountId() {
 
-		return (Number) jsonMap.get(KEY_ACCOUNT_ID);
+		return ((Double) jsonMap.get(KEY_ACCOUNT_ID)).longValue();
 
 	}
 
 	@Override
-	public Number getPlayerSlots() {
-		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_PLAYER_SLOT);
+	public int getPlayerSlots() {
+
+		return ((Double) jsonMap.get(KEY_PLAYER_SLOT)).intValue();
 	}
 
 	@Override
-	public Number getHeroId() {
-		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_HERO_ID);
+	public int getHeroId() {
+
+		return ((Double) jsonMap.get(KEY_HERO_ID)).intValue();
 	}
 
 	@Override

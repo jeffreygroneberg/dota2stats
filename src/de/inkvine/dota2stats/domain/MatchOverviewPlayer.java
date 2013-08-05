@@ -2,10 +2,10 @@ package de.inkvine.dota2stats.domain;
 
 public interface MatchOverviewPlayer {
 
-	public Number getAccountId();
+	public long getAccountId();
 
-	public Number getPlayerSlots();
+	public int getPlayerSlots();
 
-	public Number getHeroId();
+	public int getHeroId();
 
 }

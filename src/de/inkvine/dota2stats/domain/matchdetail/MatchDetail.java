@@ -7,23 +7,21 @@ import de.inkvine.dota2stats.domain.MatchOverview;
 
 public interface MatchDetail {
 
-	public Number getSeason();
-
 	public boolean didRadianWin();
 
-	public Number getDurationOfMatch();
+	public int getDurationOfMatch();
 
 	public MatchOverview getMatchOverview();
 
-	public Number getFirstBloodTime();
+	public int getFirstBloodTime();
 
-	public Number getHumanPlayer();
+	public int getHumanPlayer();
 
-	public Number getLeagueId();
+	public int getLeagueId();
 
-	public Number getPositiveVotes();
+	public int getPositiveVotes();
 
-	public Number getNegativeVotes();
+	public int getNegativeVotes();
 
 	public GameMode getGameMode();
 

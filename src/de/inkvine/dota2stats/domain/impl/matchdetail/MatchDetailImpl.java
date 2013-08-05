@@ -32,12 +32,6 @@ public class MatchDetailImpl implements MatchDetail {
 	}
 
 	@Override
-	public Number getSeason() {
-		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_SEASON);
-	}
-
-	@Override
 	public boolean didRadianWin() {
 
 		return (Boolean) jsonMap.get(KEY_RADIANT_WIN);
@@ -45,9 +39,9 @@ public class MatchDetailImpl implements MatchDetail {
 	}
 
 	@Override
-	public Number getDurationOfMatch() {
+	public int getDurationOfMatch() {
 		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_DURATION);
+		return ((Double) jsonMap.get(KEY_DURATION)).intValue();
 	}
 
 	@Override
@@ -58,33 +52,33 @@ public class MatchDetailImpl implements MatchDetail {
 	}
 
 	@Override
-	public Number getFirstBloodTime() {
+	public int getFirstBloodTime() {
 
-		return (Number) jsonMap.get(KEY_FIRST_BLOOD_TIME);
+		return ((Double) jsonMap.get(KEY_FIRST_BLOOD_TIME)).intValue();
 	}
 
 	@Override
-	public Number getHumanPlayer() {
+	public int getHumanPlayer() {
 
-		return (Number) jsonMap.get(KEY_HUMAN_PLAYERS);
+		return ((Double) jsonMap.get(KEY_HUMAN_PLAYERS)).intValue();
 	}
 
 	@Override
-	public Number getLeagueId() {
+	public int getLeagueId() {
 		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_LEAGUE_ID);
+		return ((Double) jsonMap.get(KEY_LEAGUE_ID)).intValue();
 	}
 
 	@Override
-	public Number getPositiveVotes() {
+	public int getPositiveVotes() {
 		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_POSITIVE_VOTES);
+		return ((Double) jsonMap.get(KEY_POSITIVE_VOTES)).intValue();
 	}
 
 	@Override
-	public Number getNegativeVotes() {
+	public int getNegativeVotes() {
 		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_NEGATIVE_VOTES);
+		return ((Double) jsonMap.get(KEY_NEGATIVE_VOTES)).intValue();
 	}
 
 	@Override
@@ -100,7 +94,6 @@ public class MatchDetailImpl implements MatchDetail {
 		StringBuilder sb = new StringBuilder();
 		sb.append("MatchDetailImpl object:\n");
 		sb.append("Overview:" + getMatchOverview() + "\n");
-		sb.append("---- Season: " + getSeason() + "\n");
 		sb.append("---- DidRadiantWin: " + didRadianWin() + "\n");
 		sb.append("---- DurationofMatch: " + getDurationOfMatch() + "\n");
 		sb.append("---- FirstBloodTime: " + getFirstBloodTime() + "\n");
@@ -116,6 +109,7 @@ public class MatchDetailImpl implements MatchDetail {
 
 	@Override
 	public List<MatchDetailPlayer> getPlayers() {
+		
 		List<Map<String, Object>> players = (List<Map<String, Object>>) jsonMap
 				.get("players");
 
@@ -124,6 +118,7 @@ public class MatchDetailImpl implements MatchDetail {
 			returnablePlayers.add(new MatchDetailPlayerImpl(item));
 
 		return returnablePlayers;
+		
 	}
 
 }

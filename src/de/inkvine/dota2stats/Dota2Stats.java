@@ -16,5 +16,7 @@ public interface Dota2Stats {
 	public MatchHistory getMatchHistory(MatchHistoryFilter filter);
 	
 	public MatchDetail getMatchDetails(long matchId);
+	
+	public double getKDRatio(long accountId);
 
 }
