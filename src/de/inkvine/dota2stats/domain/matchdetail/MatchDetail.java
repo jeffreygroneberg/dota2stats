@@ -1,7 +1,9 @@
 package de.inkvine.dota2stats.domain.matchdetail;
 
+import java.util.List;
+
+import de.inkvine.dota2stats.domain.GameMode;
 import de.inkvine.dota2stats.domain.MatchOverview;
-import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter.GameMode;
 
 public interface MatchDetail {
 
@@ -24,5 +26,7 @@ public interface MatchDetail {
 	public Number getNegativeVotes();
 
 	public GameMode getGameMode();
+
+	public List<MatchDetailPlayer> getPlayers();
 
 }

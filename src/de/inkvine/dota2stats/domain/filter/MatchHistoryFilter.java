@@ -3,6 +3,8 @@ package de.inkvine.dota2stats.domain.filter;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.inkvine.dota2stats.domain.GameMode;
+
 public class MatchHistoryFilter {
 
 	private List<QueryFilterCriteria> criterias = new ArrayList();
@@ -14,11 +16,15 @@ public class MatchHistoryFilter {
 		private final int value;
 
 		private Skill(int value) {
+
 			this.value = value;
+
 		}
 
 		public int getValue() {
+
 			return value;
+
 		}
 
 		public Skill getType(int value) {
@@ -29,30 +35,6 @@ public class MatchHistoryFilter {
 
 	}
 
-	public static enum GameMode {
-
-		All_Pick(1), Captains_Mode(2), Random_Draft(3), Single_Draft(4), All_Random(
-				5), INTRO_DEATH(6), The_Diretide(7), Reverse_Captains_Mode(8), Greeviling(
-				9), Tutorial(10), Mid_Only(11), Least_Played(12), New_PlayerPool(
-				13);
-
-		private final int value;
-
-		private GameMode(int value) {
-			this.value = value;
-		}
-
-		public int getValue() {
-			return value;
-		}
-
-		public GameMode getType(int value) {
-
-			return GameMode.values()[value];
-
-		}
-
-	}
 
 	public MatchHistoryFilter forSkill(final Skill skill) {
 
@@ -67,8 +49,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "skill";
+
 			}
 		});
 
@@ -89,8 +72,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "game_mode";
+
 			}
 		});
 
@@ -111,8 +95,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "player_name";
+
 			}
 		});
 
@@ -133,8 +118,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "account_id";
+
 			}
 		});
 
@@ -155,8 +141,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "date_min";
+
 			}
 		});
 
@@ -177,8 +164,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "date_max";
+
 			}
 		});
 
@@ -199,8 +187,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "date_max";
+
 			}
 		});
 
@@ -221,8 +210,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "start_at_match_id";
+
 			}
 		});
 
@@ -243,8 +233,9 @@ public class MatchHistoryFilter {
 
 			@Override
 			public String queryName() {
-				// TODO Auto-generated method stub
+
 				return "matches_requested";
+
 			}
 		});
 

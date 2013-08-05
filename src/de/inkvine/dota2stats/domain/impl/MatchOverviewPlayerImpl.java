@@ -9,7 +9,7 @@ public class MatchOverviewPlayerImpl implements MatchOverviewPlayer {
 	private static final String KEY_ACCOUNT_ID = "account_id";
 	private static final String KEY_PLAYER_SLOT = "player_slot";
 	private static final String KEY_HERO_ID = "hero_id";
-	private Map<String, Object> jsonMap;
+	protected Map<String, Object> jsonMap;
 
 	public MatchOverviewPlayerImpl(Map<String, Object> jsonMap) {
 

@@ -1,11 +1,16 @@
 package de.inkvine.dota2stats.domain.impl.matchdetail;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import de.inkvine.dota2stats.domain.GameMode;
 import de.inkvine.dota2stats.domain.MatchOverview;
-import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter.GameMode;
+import de.inkvine.dota2stats.domain.MatchOverviewPlayer;
 import de.inkvine.dota2stats.domain.impl.MatchOverviewImpl;
+import de.inkvine.dota2stats.domain.impl.MatchOverviewPlayerImpl;
 import de.inkvine.dota2stats.domain.matchdetail.MatchDetail;
+import de.inkvine.dota2stats.domain.matchdetail.MatchDetailPlayer;
 
 public class MatchDetailImpl implements MatchDetail {
 
@@ -107,6 +112,18 @@ public class MatchDetailImpl implements MatchDetail {
 
 		return sb.toString();
 
+	}
+
+	@Override
+	public List<MatchDetailPlayer> getPlayers() {
+		List<Map<String, Object>> players = (List<Map<String, Object>>) jsonMap
+				.get("players");
+
+		List<MatchDetailPlayer> returnablePlayers = new ArrayList<MatchDetailPlayer>();
+		for (Map<String, Object> item : players)
+			returnablePlayers.add(new MatchDetailPlayerImpl(item));
+
+		return returnablePlayers;
 	}
 
 }
