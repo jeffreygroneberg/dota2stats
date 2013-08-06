@@ -6,13 +6,13 @@ import de.inkvine.dota2stats.domain.MatchOverview;
 
 public interface MatchHistory {
 
-	public Number getStatus();
+	public int getStatus();
 
-	public Number getNumberOfResults();
+	public int getNumberOfResults();
 
-	public Number getTotalNumberOfResults();
+	public int getTotalNumberOfResults();
 
-	public Number getResultsRemaining();
+	public int getResultsRemaining();
 
 	public List<MatchOverview> getMatchOverviews();
 

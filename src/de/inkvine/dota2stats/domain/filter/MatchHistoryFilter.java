@@ -1,13 +1,15 @@
 package de.inkvine.dota2stats.domain.filter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.inkvine.dota2stats.domain.GameMode;
 
 public class MatchHistoryFilter {
 
-	private List<QueryFilterCriteria> criterias = new ArrayList();
+	private Map<String, QueryFilterCriteria> criterias = new HashMap<String, QueryFilterCriteria>();
 
 	public enum Skill {
 
@@ -38,7 +40,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forSkill(final Skill skill) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("skill",new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -61,7 +63,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forGameMode(final GameMode mode) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("game_mode", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -84,7 +86,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forPlayerName(final String id) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("player_name", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -107,7 +109,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forAccountId(final long id) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("account_id", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -130,7 +132,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forDateMinimum(final long timeStamp) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("date_min", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -153,7 +155,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forDateMaximum(final long timeStamp) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("date_max", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -176,7 +178,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forMinimumPlayersNumber(final int number) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("min_players", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -188,7 +190,7 @@ public class MatchHistoryFilter {
 			@Override
 			public String queryName() {
 
-				return "date_max";
+				return "min_players";
 
 			}
 		});
@@ -197,9 +199,9 @@ public class MatchHistoryFilter {
 
 	}
 
-	public MatchHistoryFilter forStartingMatchId(final int id) {
+	public MatchHistoryFilter forStartingMatchId(final long id) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("start_at_match_id", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -222,7 +224,7 @@ public class MatchHistoryFilter {
 
 	public MatchHistoryFilter forMaximumNumberOfResults(final int number) {
 
-		criterias.add(new QueryFilterCriteria() {
+		criterias.put("matches_requested", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -244,10 +246,10 @@ public class MatchHistoryFilter {
 	}
 
 	public List<QueryFilterCriteria> getCriterias() {
-		return criterias;
+		return new ArrayList<QueryFilterCriteria>( criterias.values());
 	}
 
-	public void setCriterias(List<QueryFilterCriteria> criterias) {
+	public void setCriterias(Map<String, QueryFilterCriteria> criterias) {
 		this.criterias = criterias;
 	}
 

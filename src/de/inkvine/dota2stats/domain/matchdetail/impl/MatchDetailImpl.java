@@ -1,4 +1,4 @@
-package de.inkvine.dota2stats.domain.impl.matchdetail;
+package de.inkvine.dota2stats.domain.matchdetail.impl;
 
 import java.util.ArrayList;
 import java.util.List;

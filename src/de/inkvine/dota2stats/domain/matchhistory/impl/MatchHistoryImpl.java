@@ -1,4 +1,4 @@
-package de.inkvine.dota2stats.domain.impl.matchhistory;
+package de.inkvine.dota2stats.domain.matchhistory.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,29 +24,29 @@ public class MatchHistoryImpl implements MatchHistory {
 	}
 
 	@Override
-	public Number getStatus() {
+	public int getStatus() {
 
-		return (Number) jsonMap.get(KEY_STATUS);
-
-	}
-
-	@Override
-	public Number getNumberOfResults() {
-		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_NUMBER_OF_RESULTS);
-	}
-
-	@Override
-	public Number getTotalNumberOfResults() {
-		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_TOTAL_RESULTS);
+		return ((Double) jsonMap.get(KEY_STATUS)).intValue();
 
 	}
 
 	@Override
-	public Number getResultsRemaining() {
-		// TODO Auto-generated method stub
-		return (Number) jsonMap.get(KEY_RESULTS_REMAINING);
+	public int getNumberOfResults() {
+		
+		return ((Double) jsonMap.get(KEY_NUMBER_OF_RESULTS)).intValue();
+	}
+
+	@Override
+	public int getTotalNumberOfResults() {
+		
+		return ((Double)  jsonMap.get(KEY_TOTAL_RESULTS)).intValue();
+
+	}
+
+	@Override
+	public int getResultsRemaining() {
+		
+		return ((Double)  jsonMap.get(KEY_RESULTS_REMAINING)).intValue();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package de.inkvine.dota2stats.domain.impl.matchdetail;
+package de.inkvine.dota2stats.domain.matchdetail.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -72,8 +72,7 @@ public class MatchDetailPlayerImpl extends MatchOverviewPlayerImpl implements
 
 	@Override
 	public int getAssists() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_ASSISTS)).intValue();
 	}
 
 	@Override
@@ -84,62 +83,52 @@ public class MatchDetailPlayerImpl extends MatchOverviewPlayerImpl implements
 
 	@Override
 	public int getGold() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_GOLD)).intValue();
 	}
 
 	@Override
 	public int getLastHits() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_LAST_HITS)).intValue();
 	}
 
 	@Override
 	public int getDenies() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_DENIES)).intValue();
 	}
 
 	@Override
 	public int getGoldPerMinute() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_GOLD_PER_MIN)).intValue();
 	}
 
 	@Override
 	public int getXPPerMinute() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_XP_PER_MIN)).intValue();
 	}
 
 	@Override
 	public int getGoldSpent() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_GOLD_SPENT)).intValue();
 	}
 
 	@Override
 	public int getHeroDamageDealt() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_HERO_DAMAGE)).intValue();
 	}
 
 	@Override
 	public int getTowerDamageDealt() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_TOWER_DAMAGE)).intValue();
 	}
 
 	@Override
 	public int getHeroDamageHealt() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_HERO_HEALING)).intValue();
 	}
 
 	@Override
 	public int getHeroLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ((Double) jsonMap.get(KEY_LEVEL)).intValue();
 	}
 
 	@Override
@@ -155,6 +144,10 @@ public class MatchDetailPlayerImpl extends MatchOverviewPlayerImpl implements
 		sb.append("MatchDetailPlayer object:\n");
 		sb.append("---- Kills: " + getKills() + "\n");
 		sb.append("---- Deaths: " + getDeaths() + "\n");
+		sb.append("---- Assists: " + getAssists() + "\n");
+		sb.append("---- XPM: " + getXPPerMinute() + "\n");
+		sb.append("---- GPM: " + getGoldPerMinute() + "\n");
+		sb.append("---- HeroLevel: " + getHeroLevel() + "\n");	
 
 		return super.toString() + sb.toString();
 	}
