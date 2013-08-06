@@ -21,9 +21,9 @@ for(PlayerSearchResult item : results)
 		
 }		
 
-// Get KD Ratio
-double kdratio = stats.getKDRatio(accountId);	
-System.out.println(kdratio);
+// Get Stats for player
+PlayerStats playerStats = stats.getStats(ACCOUNT_ID, 300);
+System.out.println(playerStats);
 
         
 ```
