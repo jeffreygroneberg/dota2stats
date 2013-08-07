@@ -21,21 +21,23 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import de.inkvine.dota2stats.Dota2Stats;
 import de.inkvine.dota2stats.domain.MatchOverview;
-import de.inkvine.dota2stats.domain.PlayerSearchResult;
 import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter;
 import de.inkvine.dota2stats.domain.filter.QueryStringBuilder;
-import de.inkvine.dota2stats.domain.impl.PlayerSearchResultImpl;
 import de.inkvine.dota2stats.domain.matchdetail.MatchDetail;
 import de.inkvine.dota2stats.domain.matchdetail.MatchDetailPlayer;
 import de.inkvine.dota2stats.domain.matchdetail.impl.MatchDetailImpl;
 import de.inkvine.dota2stats.domain.matchhistory.MatchHistory;
 import de.inkvine.dota2stats.domain.matchhistory.impl.MatchHistoryImpl;
+import de.inkvine.dota2stats.domain.playersearch.PlayerSearchResult;
+import de.inkvine.dota2stats.domain.playersearch.impl.PlayerSearchResultImpl;
 import de.inkvine.dota2stats.domain.playerstats.PlayerStats;
 import de.inkvine.dota2stats.domain.playerstats.impl.PlayerStatsImpl;
+import de.inkvine.dota2stats.exceptions.Dota2StatsAccessException;
 
 public class Dota2StatsImpl implements Dota2Stats {
 
@@ -50,7 +52,8 @@ public class Dota2StatsImpl implements Dota2Stats {
 	private String API_KEY;
 
 	@Override
-	public MatchHistory getMostRecentMatchHistory() {
+	public MatchHistory getMostRecentMatchHistory()
+			throws Dota2StatsAccessException {
 
 		return this.getMatchHistory(null);
 
@@ -70,7 +73,8 @@ public class Dota2StatsImpl implements Dota2Stats {
 	}
 
 	@Override
-	public MatchHistory getMatchHistory(MatchHistoryFilter filter) {
+	public MatchHistory getMatchHistory(MatchHistoryFilter filter)
+			throws Dota2StatsAccessException {
 
 		String queryString = API_GET_MATCH_HISTORY_URL + "key=" + API_KEY
 				+ this.builder.buildQueryStringForFilter(filter);
@@ -86,7 +90,8 @@ public class Dota2StatsImpl implements Dota2Stats {
 	}
 
 	@Override
-	public MatchDetail getMatchDetails(long matchId) {
+	public MatchDetail getMatchDetails(long matchId)
+			throws Dota2StatsAccessException {
 
 		String queryString = API_GET_MATCH_DETAILS_URL + "key=" + API_KEY
 				+ "&match_id=" + matchId;
@@ -103,7 +108,7 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PlayerSearchResult> searchByPlayerName(String name) {
+	public List<PlayerSearchResult> searchByPlayerName(String name) throws Dota2StatsAccessException {
 		String queryString = API_DOTABUFF_SEARCH_PLAYER + name;
 
 		List<Object> list = doHttpGetAndConvertJsonToList(queryString);
@@ -117,7 +122,7 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 	}
 
-	protected List<Object> doHttpGetAndConvertJsonToList(String queryString) {
+	protected List<Object> doHttpGetAndConvertJsonToList(String queryString) throws Dota2StatsAccessException {
 
 		String jsonString = doHttpGet(queryString);
 
@@ -129,18 +134,27 @@ public class Dota2StatsImpl implements Dota2Stats {
 	}
 
 	protected Map<String, Object> doHttpGetAndConvertJsonToObject(
-			String queryString) {
+			String queryString) throws Dota2StatsAccessException {
 
 		String jsonString = doHttpGet(queryString);
 
 		Gson gson = new Gson();
-		Map<String, Object> map = gson.fromJson(jsonString,
-				new TypeToken<HashMap<String, Object>>() {
-				}.getType());
-		return map;
+		try {
+			Map<String, Object> map = gson.fromJson(jsonString,
+					new TypeToken<HashMap<String, Object>>() {
+					}.getType());
+
+			return map;
+		} catch (JsonSyntaxException e) {
+
+			throw new Dota2StatsAccessException(
+					"Something went wrong after accessing the Dota2 WebAPI. Check accountid and/or API key!");
+
+		}
+
 	}
 
-	protected String doHttpGet(String queryString) {
+	protected String doHttpGet(String queryString) throws Dota2StatsAccessException {
 
 		System.out.println("Requesting: " + queryString);
 
@@ -159,8 +173,13 @@ public class Dota2StatsImpl implements Dota2Stats {
 			e.printStackTrace();
 		} catch (IOException e) {
 
-			e.printStackTrace();
+			throw new Dota2StatsAccessException(
+					"Cannot access host. Please check if " +
+					"your network is working and if you are " +
+					"connecting through a proxy (Configure proxy with parameters -pPort " +
+					"and -pUrl)");
 		}
+
 		String jsonString = null;
 		try {
 			jsonString = EntityUtils.toString(resp.getEntity());
@@ -175,57 +194,64 @@ public class Dota2StatsImpl implements Dota2Stats {
 	}
 
 	@Override
-	public PlayerStats getStats(long accountId, MatchHistoryFilter filter) {
-		
-		return this.getStats(accountId, -1, filter);	
-		
+	public PlayerStats getStats(long accountId, MatchHistoryFilter filter)
+			throws Dota2StatsAccessException {
+
+		return this.getStats(accountId, -1, filter);
+
 	}
-	
-	
+
 	@Override
-	public PlayerStats getStats(long accountId, int numberOfMatches) {
-		
+	public PlayerStats getStats(long accountId, int numberOfMatches)
+			throws Dota2StatsAccessException {
+
 		return this.getStats(accountId, numberOfMatches, null);
-		
-	}	
-	
-	protected PlayerStats getStats(long accountId, int numberOfMatches, MatchHistoryFilter filter) {
+
+	}
+
+	protected PlayerStats getStats(long accountId, int numberOfMatches,
+			MatchHistoryFilter filter) throws Dota2StatsAccessException {
 
 		System.out.println("Acquiring data for accountId :" + accountId);
-		
-		if(filter == null)
+
+		if (filter == null)
 			filter = new MatchHistoryFilter().forAccountId(accountId);
 
-		MatchHistory hist = this.getMatchHistory(filter.forAccountId(accountId));
+		MatchHistory hist = this
+				.getMatchHistory(filter.forAccountId(accountId));
 
 		// first request
-		List<MatchOverview> matchesOverview = hist.getMatchOverviews();		
-		
-		if(matchesOverview == null || matchesOverview.size() == 0)
-			return null;
-		
-		// user has not provided a numberofmatches instead a he has given a filter
-		if(numberOfMatches == -1)
-			numberOfMatches = hist.getTotalNumberOfResults();
-		
-		System.out.println("Found a total of matches (with applied filter): " + numberOfMatches);
+		List<MatchOverview> matchesOverview = hist.getMatchOverviews();
 
-		// calculate the number of additional requests we need to gather all the information
+		if (matchesOverview == null || matchesOverview.size() == 0)
+			return null;
+
+		// user has not provided a numberofmatches instead a he has given a
+		// filter
+		if (numberOfMatches == -1)
+			numberOfMatches = hist.getTotalNumberOfResults();
+
+		System.out.println("Found a total of matches (with applied filter): "
+				+ numberOfMatches);
+
+		// calculate the number of additional requests we need to gather all the
+		// information
 		int numberOfLoops = calculateNumberOfLoops(numberOfMatches, hist);
 
 		// get last id for next match overview request
 		long lastId = matchesOverview.get(matchesOverview.size() - 1)
 				.getMatchId();
 
-		// if we want less than 25 matches returned, we have to cut off the not needed matches
+		// if we want less than 25 matches returned, we have to cut off the not
+		// needed matches
 		int matchesFetched = matchesOverview.size();
-		if(matchesFetched > numberOfMatches) {			
-			
+		if (matchesFetched > numberOfMatches) {
+
 			matchesFetched = numberOfMatches;
 			matchesOverview = matchesOverview.subList(0, matchesFetched);
-			
-		}			
-		
+
+		}
+
 		// unfortunately we have to get the metaData one after another :(
 		for (int i = 1; i < numberOfLoops; i++) {
 
@@ -235,12 +261,12 @@ public class Dota2StatsImpl implements Dota2Stats {
 			List<MatchOverview> retrievedMatches = hist.getMatchOverviews();
 
 			for (MatchOverview match : retrievedMatches) {
-				if(matchesFetched >= numberOfMatches)
+				if (matchesFetched >= numberOfMatches)
 					break;
-				
+
 				matchesOverview.add(match);
 				matchesFetched++;
-				
+
 			}
 
 			lastId = hist.getMatchOverviews()
@@ -248,8 +274,7 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 		}
 
-		PlayerStats stats = getStatsForMatches(accountId,
-				matchesOverview);
+		PlayerStats stats = getStatsForMatches(accountId, matchesOverview);
 
 		return stats;
 
@@ -273,14 +298,15 @@ public class Dota2StatsImpl implements Dota2Stats {
 	private PlayerStats getStatsForMatches(long accountId,
 			List<MatchOverview> matchesOverview) {
 		List<Callable<MatchDetail>> matchRequests = new ArrayList<Callable<MatchDetail>>();
-		
+
 		final ExecutorService pool = Executors.newFixedThreadPool(25);
-		
-		int reqCounter = 1;		
-		
+
+		int reqCounter = 1;
+
 		for (final MatchOverview match : matchesOverview) {
-			
-			System.out.println("Adding " + reqCounter + " / " + matchesOverview.size() + " requests");
+
+			System.out.println("Adding " + reqCounter + " / "
+					+ matchesOverview.size() + " requests");
 
 			matchRequests.add(new Callable<MatchDetail>() {
 
@@ -291,7 +317,7 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 				}
 			});
-			
+
 			reqCounter++;
 
 		}
@@ -306,16 +332,17 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 		List<MatchDetail> receivedMatches = new ArrayList<MatchDetail>();
 
-		for (Future<MatchDetail> future : matchDetailCallResults) {		
-			
+		for (Future<MatchDetail> future : matchDetailCallResults) {
+
 			try {
-				
+
 				receivedMatches.add(future.get());
-				
+
 				synchronized (this) {
-					System.out.println("Received request. " + --reqCounter + " requests to go!");
+					System.out.println("Received request. " + --reqCounter
+							+ " requests to go!");
 				}
-				
+
 			} catch (InterruptedException e) {
 
 				e.printStackTrace();
@@ -346,7 +373,7 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 					System.out.println("Found player in match: "
 							+ match.getMatchOverview().getMatchId());
-					
+
 					kills += player.getKills();
 					xpm += player.getXPPerMinute();
 					gpm += player.getGoldPerMinute();
@@ -354,24 +381,25 @@ public class Dota2StatsImpl implements Dota2Stats {
 					denies += player.getDenies();
 					lastHits += player.getLastHits();
 					assists += player.getAssists();
-					
+
 				}
 
 			}
 
 		}
 
-		PlayerStatsImpl playerStats = new PlayerStatsImpl(receivedMatches.size());
+		PlayerStatsImpl playerStats = new PlayerStatsImpl(
+				receivedMatches.size());
 		playerStats.setDeaths(deaths);
 		playerStats.setDenies(denies);
 		playerStats.setGoldPerMinute(gpm);
 		playerStats.setKills(kills);
 		playerStats.setLastHits(lastHits);
 		playerStats.setXPPerMinute(xpm);
-		playerStats.setAssists(assists);		
-		
+		playerStats.setAssists(assists);
+
 		return playerStats;
-		
+
 	}
 
 }

@@ -1,8 +1,8 @@
-package de.inkvine.dota2stats.domain.impl;
+package de.inkvine.dota2stats.domain.playersearch.impl;
 
 import java.util.Map;
 
-import de.inkvine.dota2stats.domain.PlayerSearchResult;
+import de.inkvine.dota2stats.domain.playersearch.PlayerSearchResult;
 
 public class PlayerSearchResultImpl implements PlayerSearchResult {
 
@@ -41,7 +41,7 @@ public class PlayerSearchResultImpl implements PlayerSearchResult {
 	public String toString() {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("PlayerSearchResultImpl object:\n");
+		sb.append("Player:\n");
 		sb.append("---- id: " + getAccountId() + "\n");
 		sb.append("---- name: " + getName() + "\n");
 		sb.append("---- icon: " + getIconUrl() + "\n");

@@ -146,7 +146,7 @@ public class PlayerStatsImpl implements PlayerStats {
 
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("PlayerStatsImpl object:\n");
+		sb.append("PlayerStats object:\n");
 		sb.append("---- KDA: " + getKillDeathAssistRatio() + "\n");
 		sb.append("---- KD: " + getKillDeathRatio() + "\n");
 		sb.append("---- Kills: " + getOverallKills() + "\n");

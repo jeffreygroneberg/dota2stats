@@ -1,4 +1,4 @@
-package de.inkvine.dota2stats.domain;
+package de.inkvine.dota2stats.domain.playersearch;
 
 public interface PlayerSearchResult {
 	
