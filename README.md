@@ -166,3 +166,5 @@ System.out.println(playerStatsWithFilter);
 System.out.println(playerStatsByRecentNumberOfMatches);
 ```
 
+**Keep in mind that this is a quite extensive network abuse and I really advice you not to use this function too often as Valve could just ban your API Key!!! Use with caution!!**
+
