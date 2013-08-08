@@ -187,7 +187,7 @@ When everything is done, change your current working directory to that one, wher
 java -jar dota2stats.jar
 ```
 
-An interactive shell will greet you telling all the further steps you need to know to get your stats from the tool:
+The shell will greet you telling all the further steps you need to know to get your stats from the tool:
 
 <pre>
 usage: dota2stats <options>
