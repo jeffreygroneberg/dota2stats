@@ -237,11 +237,9 @@ ______  _______________________    _______
  -pUrl,--proxyUrl <url>            The url to your proxy server
  -s,--stats <accountid>            Aggregates stats and calculates averages (eg
                                    KDA/KD/GPM/...) for the player with the given
-
                                    account id. Please use -n to specify the
                                    number of matches to aggregate over. You can
                                    also limit the number of matches by date with
-
                                    -dsince and -dto.
 Usage and examples
 ====================================
