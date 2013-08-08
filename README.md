@@ -2,7 +2,7 @@
 
 ## About
 
-This repository is offering a simple Java Wrapper to access most of the interesing stats provided by Valve's Web API. In addition to the wrapper itself you will also find an easy to use [**small command line tool**](#cli) that has been built on top of the Dota2Stats Java Wrapper.
+This repository is offering a simple Java Wrapper to access most of the interesing stats provided by Valve's Web API. In addition to the wrapper itself you will also find an easy to use [**small command line tool**](#working-with-the-command-line-tool) that has been built on top of the Dota2Stats Java Wrapper.
 
 Right now the API is capable to do the following things:
 
@@ -150,7 +150,7 @@ try {
 }
 ```
 
-### The magic: Getting aggregated values for an account it to see average KD/KDA ratio, GPM/XPM per match and overall kills/deaths stats. 
+### Magic: Getting aggregated values for an account id to see average KD/KDA ratio, GPM/XPM per match and overall kills/deaths stats. 
 
 ```java
 // using a date filter
@@ -168,3 +168,96 @@ System.out.println(playerStatsByRecentNumberOfMatches);
 
 **Keep in mind that this is a quite extensive network abuse and I really advice you not to use this function too often as Valve could just ban your API Key!!! Use with caution!!**
 
+## Working with the command line tool
+
+### Where is it?
+
+The command line tool can be found in the export-cli-jar folder of this repository. 
+
+### How to start it?
+
+First of all you need an up to date Java version. Start your terminal (Unix) or cmd (Windows) and check if Java is available via 
+```bash
+java -version
+```
+If everything works fine you will see the current version of your installed JRE. If you can't see it, but you have installed Java on your system, you just have to add the JRE/bin folder to your %PATH% environment.
+When everything is done, change your current working directory to that one, where you saved the dota2stats.jar file and simple start the tool with
+
+```bash
+java -jar dota2stats.jar
+```
+
+An interactive shell will greet you telling all the further steps you need to know to get your stats from the tool:
+
+<pre>
+usage: dota2stats <options>
+______  _______________________    _______
+(  __  \(  ___  \__   __(  ___  )  / ___   )
+| (  \  | (   ) |  ) (  | (   ) |  \/   )  |
+| |   ) | |   | |  | |  | (___) |      /   )
+| |   | | |   | |  | |  |  ___  |    _/   /
+| |   ) | |   | |  | |  | (   ) |   /   _/
+| (__/  | (___) |  | |  | )   ( |  (   (__/\
+(__________________________________________/
+(  ____ \__   __(  ___  \__   __(  ____ \
+| (    \/  ) (  | (   ) |  ) (  | (    \/
+| (_____   | |  | (___) |  | |  | (_____
+(_____  )  | |  |  ___  |  | |  (_____  )
+.     ) |  | |  | (   ) |  | |        ) |
+/\____) |  | |  | )   ( |  | |  /\____) |
+\_______)  )_(  |/     \|  )_(  \_______)
+
+ -dsince,--datesince <timestamp>   The date to aggregate all matches when
+                                   combined with -s. FROM THE GIVEN DATE to your
+                                   very first match. Combine with -dto to create
+                                   a specific timeframe (-dto < -dsince)
+                                   
+ -dto,--dateto <timestamp>         The date to aggregate all matches when
+                                   combined with -s. From NOW till the given
+                                   date. Combine with -dsince to create a
+                                   specific timeframe (-dto < -dsince)
+                                   
+ -f,--findplayer <name>            Returns a list of players with their
+                                   corresponding steam id (32Bit). You can
+                                   combine the search with the stats function
+                                   (-stats, --getstats). Be aware that the first
+                                   result will be taken to get the stats for if
+                                   no additional account id has been given.
+                                   
+ -k,--key <apikey>                 Mandatory!! The API key to access valves
+                                   stats service. Visit
+                                   http://steamcommunity.com/dev/apikey and fill
+                                   out the form to get one.
+                                   
+ -n,--number <numberofmatches>     The number of recent matches to be
+                                   aggregated. (Ignored when -dto and/or -dsince
+                                   are given)
+                                   
+ -pPort,--proxyPort <port>         The port to your proxy server
+ -pUrl,--proxyUrl <url>            The url to your proxy server
+ -s,--stats <accountid>            Aggregates stats and calculates averages (eg
+                                   KDA/KD/GPM/...) for the player with the given
+
+                                   account id. Please use -n to specify the
+                                   number of matches to aggregate over. You can
+                                   also limit the number of matches by date with
+
+                                   -dsince and -dto.
+Usage and examples
+====================================
+1. Find out the steamid of the player with the name 'Hans' accountid
+# dota2stats -f Hans
+===
+2. Get all the stats of the recent 100 matches for a given accountid (123456)
+with API key
+# dota2stats -s 123456 -n 100 -k 1212121212121212
+===
+3. Get all the stats from the very first match to 2012/12/13 (as unix timestamp)
+
+with API key
+# dota2stats -s 123456 -dsince 1355356800 -k 1212121212121212
+===
+4. Get all the stats from NOW to 2012/12/13 (as unix timestamp) with API key
+# dota2stats -s 123456 -dto 1355356800 -k 1212121212121212
+
+</pre>
