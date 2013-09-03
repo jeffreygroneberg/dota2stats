@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Dota2stats : Java Library that allows access to all Dota2 Stats provided by Valves WebAPI" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Dota2stats</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/inkvine/dota2stats">View on GitHub</a>
+
+          <h1 id="project_title">Dota2stats</h1>
+          <h2 id="project_tagline">Java Library that allows access to all Dota2 Stats provided by Valves WebAPI</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/inkvine/dota2stats/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/inkvine/dota2stats/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="dota2stats-java-api-wrapper--dota2stats-command-line-tool" class="anchor" href="#dota2stats-java-api-wrapper--dota2stats-command-line-tool"><span class="octicon octicon-link"></span></a>Dota2Stats Java API Wrapper &amp; Dota2Stats Command Line Tool</h1>
+
+<h2>
+<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
+
+<p>This repository is offering a simple Java Wrapper to access most of the interesing stats provided by Valve's Web API. In addition to the wrapper itself you will also find an easy to use <a href="#working-with-the-command-line-tool"><strong>small command line tool</strong></a> that has been built on top of the Dota2Stats Java Wrapper.</p>
+
+<p>Right now the API is capable to do the following things:</p>
+
+<ul>
+<li><p><strong>Search a player by name to get his account (steam)id</strong> </p></li>
+<li><p><strong>Get the most recent public match history</strong></p></li>
+<li><p><strong>Get the match history based on a filter that allowes to limit your search by an accound id, a date, ...</strong></p></li>
+<li><p><strong>Get all the data for specific match by its id</strong></p></li>
+<li>
+<p><strong>Get aggregated values like AVERAGE KD, KDA RATIO, GPM, XPM, ... for a given amount of matches or by date.</strong></p>
+
+<ul>
+<li>An example: 
+<pre>
+---- KDA: 13.087734627831715
+---- KD: 1.0310679611650486
+---- Kills: 2124.0
+---- Average Kills: 7.08
+---- Deaths: 2060.0
+---- Average Deaths: 6.866666666666666
+---- Assists: 3617.0
+---- Average Assists: 12.056666666666667
+---- Last Hits: 25323.0
+---- Average Last Hits: 84.41
+---- Denies: 1538.0
+---- Average Denies: 5.126666666666667
+---- Average GPM: 325.0133333333333
+---- Average XPM: 414.47333333333336
+</pre>
+</li>
+</ul>
+</li>
+</ul><p><em>Bare in mind that this API has been hacked together within few hours so a few attributes (like items or units) of the objects you receive won't have a value! I will fill those attributes with values with every commit!!</em></p>
+
+<h2>
+<a name="prerequisites" class="anchor" href="#prerequisites"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<h3>
+<a name="understand-valves-web-api" class="anchor" href="#understand-valves-web-api"><span class="octicon octicon-link"></span></a>Understand Valve's Web API</h3>
+
+<p>Before you start using this Java Wrapper you should first take a look a the great description from the <a href="http://dev.dota2.com/showthread.php?t=58317">THINGS YOU SHOULD KNOW BEFORE STARTINGDEV</a> thread form the official developer forum powered by Valve. There you get a first feeling of which data you can accept and which parameters are available to limit the results of your calls.</p>
+
+<h3>
+<a name="obtain-an-api-key" class="anchor" href="#obtain-an-api-key"><span class="octicon octicon-link"></span></a>Obtain an API Key</h3>
+
+<p>As with every public API you need a key to consume it. Visit <a href="http://steamcommunity.com/dev/apikey">http://steamcommunity.com/dev/apikey</a> and fill out the form. It does not matter what URL you are providing, but a good practice would be to take something unique related to yourself. </p>
+
+<h2>
+<a name="use-the-api" class="anchor" href="#use-the-api"><span class="octicon octicon-link"></span></a>Use The API</h2>
+
+<h3>
+<a name="initialize" class="anchor" href="#initialize"><span class="octicon octicon-link"></span></a>Initialize</h3>
+
+<p>It is quite simple to get started with the Dota2Stats Library. You have two possibilites:</p>
+
+<div class="highlight"><pre><span class="c1">// Initialize to work with a proxy</span>
+<span class="n">Dota2Stats</span> <span class="n">stats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dota2StatsImpl</span><span class="o">(</span><span class="s">"YOUR_API_KEY"</span><span class="o">,</span> <span class="s">"YOUR_PROXY_URL"</span><span class="o">,</span> <span class="o">[</span><span class="n">YOURPROXYPORT</span><span class="o">]);</span>       
+<span class="c1">// Initialize without a proxy</span>
+<span class="n">Dota2Stats</span> <span class="n">stats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Dota2StatsImpl</span><span class="o">(</span><span class="s">"YOUR_API_KEY"</span><span class="o">);</span>
+</pre></div>
+
+<p>If you are wondering why you have access to the implementation of the interface then be warned that a factory will come. :)
+<strong>But that's it all. Now you have access to all the functions! Nothing more to do!</strong></p>
+
+<h3>
+<a name="get-the-account-id-for-a-player-name" class="anchor" href="#get-the-account-id-for-a-player-name"><span class="octicon octicon-link"></span></a>Get the account id for a player name</h3>
+
+<div class="highlight"><pre>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">PlayerSearchResult</span><span class="o">&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="na">searchByPlayerName</span><span class="o">(</span><span class="s">"john doe"</span><span class="o">);</span>
+
+    <span class="c1">// Look at the results!</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">PlayerSearchResult</span> <span class="n">item</span> <span class="o">:</span> <span class="n">results</span><span class="o">)</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>   
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Dota2StatsAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Do something if an error occured         </span>
+<span class="o">}</span>
+
+</pre></div>
+
+<h3>
+<a name="get-the-25-most-recent-matches" class="anchor" href="#get-the-25-most-recent-matches"><span class="octicon octicon-link"></span></a>Get the 25 most recent matches</h3>
+
+<div class="highlight"><pre><span class="k">try</span> <span class="o">{</span>
+
+    <span class="n">MatchHistory</span> <span class="n">history</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="na">getMostRecentMatchHistory</span><span class="o">();</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">MatchOverview</span><span class="o">&gt;</span> <span class="n">overviews</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="na">getMatchOverviews</span><span class="o">();</span>
+
+    <span class="c1">// print all match overviews found</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">MatchOverview</span> <span class="n">match</span> <span class="o">:</span> <span class="n">overviews</span><span class="o">)</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">match</span><span class="o">);</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Dota2StatsAccessException</span> <span class="n">e1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Do something if an error occurs</span>
+<span class="o">}</span>
+
+</pre></div>
+
+<h3>
+<a name="working-with-the-filter-eg-get-all-matches-for-a-specific-account-id" class="anchor" href="#working-with-the-filter-eg-get-all-matches-for-a-specific-account-id"><span class="octicon octicon-link"></span></a>Working with the filter (eg. get all matches for a specific account id)</h3>
+
+<p>With a <em>MatchHistoryFilter</em> it is possible to create some search parameters that are then used to access the WebAPI.
+The match history filter offers the following functions to parameterize your request:</p>
+
+<ul>
+<li>forSkill(Skill)</li>
+<li>forGameMode(GameMode)</li>
+<li>forPlayerName(String)</li>
+<li>forAccountId(long)</li>
+<li>forDateMinimum(long)</li>
+<li>forDateMaximum(long)</li>
+<li>forMinimumPlayersNumber(int)</li>
+<li>forStartingMatchId(long)</li>
+<li>forMaximumNumberOfResults(int)</li>
+</ul><p>It is simple if you see the API call. Let's assume we want to have all matches for a player that has the accountid 1234 and only All Pick Games:</p>
+
+<div class="highlight"><pre><span class="k">try</span> <span class="o">{</span>
+    <span class="n">MatchHistory</span> <span class="n">history</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="na">getMatchHistory</span><span class="o">(</span><span class="k">new</span> <span class="n">MatchHistoryFilter</span><span class="o">().</span><span class="na">forAccountId</span><span class="o">(</span><span class="mi">1234</span><span class="o">).</span><span class="na">forGameMode</span><span class="o">(</span><span class="n">GameMode</span><span class="o">.</span><span class="na">All_Pick</span><span class="o">));</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">MatchOverview</span><span class="o">&gt;</span> <span class="n">overviews</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="na">getMatchOverviews</span><span class="o">();</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="n">MatchOverview</span> <span class="n">match</span> <span class="o">:</span> <span class="n">overviews</span><span class="o">)</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">match</span><span class="o">);</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Dota2StatsAccessException</span> <span class="n">e1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Do something if an error occurs</span>
+<span class="o">}</span>
+
+</pre></div>
+
+<h3>
+<a name="get-detailed-information-for-a-match-and-extract-all-player-stats-there" class="anchor" href="#get-detailed-information-for-a-match-and-extract-all-player-stats-there"><span class="octicon octicon-link"></span></a>Get detailed information for a match and extract all player stats there</h3>
+
+<p>From the <em>MatchOverview</em> object you can obtain its specific match id. With this it is possible to get all the stats of this match.</p>
+
+<div class="highlight"><pre><span class="k">try</span> <span class="o">{</span>
+
+    <span class="c1">// Get the details for a given match id</span>
+    <span class="n">MatchDetail</span> <span class="n">detail</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="na">getMatchDetails</span><span class="o">(</span><span class="mi">12345</span><span class="o">);</span>
+
+    <span class="c1">// extract all player stats from this game</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">MatchDetailPlayer</span><span class="o">&gt;</span> <span class="n">playersStatsOfTheMatch</span> <span class="o">=</span> <span class="n">detail</span><span class="o">.</span><span class="na">getPlayers</span><span class="o">();</span>
+
+    <span class="c1">// Show 'em</span>
+    <span class="k">for</span><span class="o">(</span><span class="n">MatchDetailPlayer</span> <span class="n">player</span> <span class="o">:</span> <span class="n">playersStatsOfTheMatch</span><span class="o">)</span> 
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">player</span><span class="o">);</span>         
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Dota2StatsAccessException</span> <span class="n">e1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Do something if an error occurs</span>
+<span class="o">}</span>
+</pre></div>
+
+<h3>
+<a name="magic-getting-aggregated-values-for-an-account-id-to-see-average-kdkda-ratio-gpmxpm-per-match-and-overall-killsdeaths-stats" class="anchor" href="#magic-getting-aggregated-values-for-an-account-id-to-see-average-kdkda-ratio-gpmxpm-per-match-and-overall-killsdeaths-stats"><span class="octicon octicon-link"></span></a>Magic: Getting aggregated values for an account id to see average KD/KDA ratio, GPM/XPM per match and overall kills/deaths stats.</h3>
+
+<div class="highlight"><pre><span class="c1">// using a date filter</span>
+<span class="n">PlayerStats</span> <span class="n">playerStatsWithFilter</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="na">getStats</span><span class="o">(</span><span class="mi">123456</span><span class="o">,</span>
+    <span class="k">new</span> <span class="nf">MatchHistoryFilter</span><span class="o">().</span><span class="na">forDateMaximum</span><span class="o">(</span><span class="mi">1349827200</span><span class="o">)</span>
+                            <span class="o">.</span><span class="na">forDateMinimum</span><span class="o">(</span><span class="mi">1349395200</span><span class="o">));</span>
+
+<span class="c1">// just a number of recent matches</span>
+<span class="n">PlayerStats</span> <span class="n">playerStatsByRecentNumberOfMatches</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="na">getStats</span><span class="o">(</span><span class="mi">123456</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+
+<span class="c1">// print it!!</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">playerStatsWithFilter</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">playerStatsByRecentNumberOfMatches</span><span class="o">);</span>
+</pre></div>
+
+<p><strong>Keep in mind that this is a quite extensive network abuse and I really advice you not to use this function too often as Valve could just ban your API Key!!! Use with caution!!</strong></p>
+
+<h2>
+<a name="working-with-the-command-line-tool" class="anchor" href="#working-with-the-command-line-tool"><span class="octicon octicon-link"></span></a>Working with the command line tool</h2>
+
+<h3>
+<a name="where-is-it" class="anchor" href="#where-is-it"><span class="octicon octicon-link"></span></a>Where is it?</h3>
+
+<p>The command line tool can be found in the export-cli-jar folder of this repository. </p>
+
+<h3>
+<a name="how-to-start-it" class="anchor" href="#how-to-start-it"><span class="octicon octicon-link"></span></a>How to start it?</h3>
+
+<p>First of all you need an up to date Java version. Start your terminal (Unix) or cmd (Windows) and check if Java is available via </p>
+
+<div class="highlight"><pre>java -version
+</pre></div>
+
+<p>If everything works fine you will see the current version of your installed JRE. If you can't see it, but you have installed Java on your system, you just have to add the JRE/bin folder to your %PATH% environment.
+When everything is done, change your current working directory to that one, where you saved the dota2stats.jar file and simple start the tool with</p>
+
+<div class="highlight"><pre>java -jar dota2stats.jar
+</pre></div>
+
+<p>The shell will greet you telling all the further steps you need to know to get your stats from the tool:</p>
+
+<pre>
+usage: dota2stats 
+______  _______________________    _______
+(  __  \(  ___  \__   __(  ___  )  / ___   )
+| (  \  | (   ) |  ) (  | (   ) |  \/   )  |
+| |   ) | |   | |  | |  | (___) |      /   )
+| |   | | |   | |  | |  |  ___  |    _/   /
+| |   ) | |   | |  | |  | (   ) |   /   _/
+| (__/  | (___) |  | |  | )   ( |  (   (__/\
+(__________________________________________/
+(  ____ \__   __(  ___  \__   __(  ____ \
+| (    \/  ) (  | (   ) |  ) (  | (    \/
+| (_____   | |  | (___) |  | |  | (_____
+(_____  )  | |  |  ___  |  | |  (_____  )
+.     ) |  | |  | (   ) |  | |        ) |
+/\____) |  | |  | )   ( |  | |  /\____) |
+\_______)  )_(  |/     \|  )_(  \_______)
+
+ -dsince,--datesince    The date to aggregate all matches when
+                                   combined with -s. FROM THE GIVEN DATE to your
+                                   very first match. Combine with -dto to create
+                                   a specific timeframe (-dto          The date to aggregate all matches when
+                                   combined with -s. From NOW till the given
+                                   date. Combine with -dsince to create a
+                                   specific timeframe (-dto             Returns a list of players with their
+                                   corresponding steam id (32Bit). You can
+                                   combine the search with the stats function
+                                   (-stats, --getstats). Be aware that the first
+                                   result will be taken to get the stats for if
+                                   no additional account id has been given.
+                                   
+ -k,--key                  Mandatory!! The API key to access valves
+                                   stats service. Visit
+                                   http://steamcommunity.com/dev/apikey and fill
+                                   out the form to get one.
+                                   
+ -n,--number      The number of recent matches to be
+                                   aggregated. (Ignored when -dto and/or -dsince
+                                   are given)
+                                   
+ -pPort,--proxyPort          The port to your proxy server
+ -pUrl,--proxyUrl             The url to your proxy server
+ -s,--stats             Aggregates stats and calculates averages (eg
+                                   KDA/KD/GPM/...) for the player with the given
+                                   account id. Please use -n to specify the
+                                   number of matches to aggregate over. You can
+                                   also limit the number of matches by date with
+                                   -dsince and -dto.
+Usage and examples
+====================================
+1. Find out the steamid of the player with the name 'Hans' accountid
+# dota2stats -f Hans
+===
+2. Get all the stats of the recent 100 matches for a given accountid (123456)
+with API key
+# dota2stats -s 123456 -n 100 -k 1212121212121212
+===
+3. Get all the stats from the very first match to 2012/12/13 (as unix timestamp)
+
+with API key
+# dota2stats -s 123456 -dsince 1355356800 -k 1212121212121212
+===
+4. Get all the stats from NOW to 2012/12/13 (as unix timestamp) with API key
+# dota2stats -s 123456 -dto 1355356800 -k 1212121212121212
+
+</pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Dota2stats maintained by <a href="https://github.com/inkvine">inkvine</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
