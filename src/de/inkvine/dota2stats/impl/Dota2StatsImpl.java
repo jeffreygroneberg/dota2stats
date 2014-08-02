@@ -45,7 +45,7 @@ import de.inkvine.dota2stats.exceptions.Dota2StatsAccessException;
 
 public class Dota2StatsImpl implements Dota2Stats {
 
-	private static final int MAXIMUM_NUMBER_OF_MATCH_OVERVIEWS_PER_REQUEST = 25;
+	private static final int MAXIMUM_NUMBER_OF_MATCH_OVERVIEWS_PER_REQUEST = 100;
 	private static final String API_GET_MATCH_HISTORY_URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?";
 	private static final String API_GET_MATCH_DETAILS_URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?";
 	private static final String API_DOTABUFF_SEARCH_PLAYER = "http://dotabuff.com/search?utf8=%E2%9C%93&commit=Search&q=";
