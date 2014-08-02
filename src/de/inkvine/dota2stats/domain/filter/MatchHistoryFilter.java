@@ -13,7 +13,7 @@ public class MatchHistoryFilter {
 
 	public enum Skill {
 
-		Normal(0), High(1), Very_High(2);
+		Any(0), Normal(1), High(2), Very_High(3);
 
 		private final int value;
 
@@ -37,10 +37,9 @@ public class MatchHistoryFilter {
 
 	}
 
-
 	public MatchHistoryFilter forSkill(final Skill skill) {
 
-		criterias.put("skill",new QueryFilterCriteria() {
+		criterias.put("skill", new QueryFilterCriteria() {
 
 			@Override
 			public Object value() {
@@ -246,7 +245,7 @@ public class MatchHistoryFilter {
 	}
 
 	public List<QueryFilterCriteria> getCriterias() {
-		return new ArrayList<QueryFilterCriteria>( criterias.values());
+		return new ArrayList<QueryFilterCriteria>(criterias.values());
 	}
 
 	public void setCriterias(Map<String, QueryFilterCriteria> criterias) {
