@@ -1,42 +1,43 @@
 package de.inkvine.dota2stats.domain.playersearch.impl;
 
-import java.util.Map;
-
 import de.inkvine.dota2stats.domain.playersearch.PlayerSearchResult;
 
 public class PlayerSearchResultImpl implements PlayerSearchResult {
 
-	private static String KEY_ICON = "icon";
-	private static String KEY_NAME = "name";
-	private static String KEY_URL = "url";
+	private String keyUrl;
+	private String name;
+	private String iconUrl;
 
-	protected Map<String, Object> jsonMap;
-
-	public PlayerSearchResultImpl(Map<String, Object> jsonMap) {
-
-		this.jsonMap = jsonMap;
-
+	public PlayerSearchResultImpl(String keyUrl, String name, String iconUrl) {
+		super();
+		this.keyUrl = keyUrl;
+		this.name = name;
+		this.iconUrl = iconUrl;
 	}
 
-	@Override
-	public String getName() {
-
-		return (String) jsonMap.get(KEY_NAME);
-
+	public String getKeyUrl() {
+		return keyUrl;
 	}
 
-	@Override
-	public String getIconUrl() {
-		return (String) jsonMap.get(KEY_ICON);
+	public void setKeyUrl(String keyUrl) {
+		this.keyUrl = keyUrl;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
 	}
 
 	@Override
 	public long getAccountId() {
-		String accountUrl = (String) jsonMap.get(KEY_URL);
-		int indexOfLastSlash = accountUrl.lastIndexOf("/");
-		return Long.parseLong(accountUrl.substring(indexOfLastSlash + 1));
+
+		int indexOfLastSlash = keyUrl.lastIndexOf("/");
+		return Long.parseLong(keyUrl.substring(indexOfLastSlash + 1));
 	}
-	
+
 	@Override
 	public String toString() {
 
@@ -48,6 +49,17 @@ public class PlayerSearchResultImpl implements PlayerSearchResult {
 
 		return sb.toString();
 
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String getIconUrl() {
+
+		return this.iconUrl;
 	}
 
 }

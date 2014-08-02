@@ -19,6 +19,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -44,7 +48,7 @@ public class Dota2StatsImpl implements Dota2Stats {
 	private static final int MAXIMUM_NUMBER_OF_MATCH_OVERVIEWS_PER_REQUEST = 25;
 	private static final String API_GET_MATCH_HISTORY_URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?";
 	private static final String API_GET_MATCH_DETAILS_URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?";
-	private static final String API_DOTABUFF_SEARCH_PLAYER = "http://dotabuff.com/search/hints.json?q=";
+	private static final String API_DOTABUFF_SEARCH_PLAYER = "http://dotabuff.com/search?utf8=%E2%9C%93&commit=Search&q=";
 
 	private QueryStringBuilder builder = new QueryStringBuilder();
 	HttpHost proxy;
@@ -108,21 +112,75 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PlayerSearchResult> searchByPlayerName(String name) throws Dota2StatsAccessException {
+	public List<PlayerSearchResult> searchByPlayerName(String name)
+			throws Dota2StatsAccessException {
 		String queryString = API_DOTABUFF_SEARCH_PLAYER + name;
+		Elements playerNames;
+		Document doc;
 
-		List<Object> list = doHttpGetAndConvertJsonToList(queryString);
-
-		// add all results to the list of players
 		List<PlayerSearchResult> results = new ArrayList<PlayerSearchResult>();
-		for (Object item : list)
-			results.add(new PlayerSearchResultImpl((Map<String, Object>) item));
+		// List<Object> list =
+		try {
 
-		return results;
+			doc = Jsoup
+					.connect(queryString)
+					.userAgent(
+							"Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36")
+					.get();
+
+			// try to get a list of users
+			playerNames = doc.select("div.record.player[data-link-to]");
+
+			// check if we found users
+			if (playerNames.size() > 0) {
+
+				for (Element element : playerNames) {
+
+					PlayerSearchResult result = extractPlayerSearchResult(element);
+					results.add(result);
+
+				}
+
+				return results;
+
+			}
+
+			// check if the result was ONE single user
+			Elements playerContainer = doc
+					.select("div.image-container.image-container-avatar.image-container-player");
+			Elements playerInfo = playerContainer.select("a[href]");
+
+			if (playerContainer.size() == 1) {
+				
+				results.add(extractPlayerSearchResult(playerInfo.first()));
+				
+				return results;
+				
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new Dota2StatsAccessException(
+					"Something went wrong whole searching for the given name. Are you connected to the internet??");
+
+		}
+
+		return null;
 
 	}
 
-	protected List<Object> doHttpGetAndConvertJsonToList(String queryString) throws Dota2StatsAccessException {
+	private PlayerSearchResult extractPlayerSearchResult(Element element) {
+		String playerName = element.select("img").attr("alt");
+		String iconUrl = element.select("img").attr("src");
+		String keyUrl = element.select("a").attr("href");
+
+		PlayerSearchResult result = new PlayerSearchResultImpl(
+				keyUrl, playerName, iconUrl);
+		return result;
+	}
+
+	protected List<Object> doHttpGetAndConvertJsonToList(String queryString)
+			throws Dota2StatsAccessException {
 
 		String jsonString = doHttpGet(queryString);
 
@@ -154,7 +212,8 @@ public class Dota2StatsImpl implements Dota2Stats {
 
 	}
 
-	protected String doHttpGet(String queryString) throws Dota2StatsAccessException {
+	protected String doHttpGet(String queryString)
+			throws Dota2StatsAccessException {
 
 		System.out.println("Requesting: " + queryString);
 
@@ -174,10 +233,10 @@ public class Dota2StatsImpl implements Dota2Stats {
 		} catch (IOException e) {
 
 			throw new Dota2StatsAccessException(
-					"Cannot access host. Please check if " +
-					"your network is working and if you are " +
-					"connecting through a proxy (Configure proxy with parameters -pPort " +
-					"and -pUrl)");
+					"Cannot access host. Please check if "
+							+ "your network is working and if you are "
+							+ "connecting through a proxy (Configure proxy with parameters -pPort "
+							+ "and -pUrl)");
 		}
 
 		String jsonString = null;

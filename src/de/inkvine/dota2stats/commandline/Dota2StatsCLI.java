@@ -128,9 +128,10 @@ public class Dota2StatsCLI {
 					for (PlayerSearchResult player : playerResults) {
 
 						System.out.println(player);
-						return;
+						
 
 					}
+					return;
 				}
 
 			}
