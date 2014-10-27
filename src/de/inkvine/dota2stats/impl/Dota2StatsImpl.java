@@ -32,6 +32,7 @@ import de.inkvine.dota2stats.Dota2Stats;
 import de.inkvine.dota2stats.domain.MatchOverview;
 import de.inkvine.dota2stats.domain.filter.MatchHistoryFilter;
 import de.inkvine.dota2stats.domain.filter.QueryStringBuilder;
+import de.inkvine.dota2stats.domain.heros.Heroes;
 import de.inkvine.dota2stats.domain.matchdetail.MatchDetail;
 import de.inkvine.dota2stats.domain.matchdetail.MatchDetailPlayer;
 import de.inkvine.dota2stats.domain.matchdetail.impl.MatchDetailImpl;
@@ -49,11 +50,27 @@ public class Dota2StatsImpl implements Dota2Stats {
 	private static final String API_GET_MATCH_HISTORY_URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?";
 	private static final String API_GET_MATCH_DETAILS_URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?";
 	private static final String API_DOTABUFF_SEARCH_PLAYER = "http://dotabuff.com/search?utf8=%E2%9C%93&commit=Search&q=";
-
+    private static final String API_GET_HEROS_URL = "https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?";
+	
+	
 	private QueryStringBuilder builder = new QueryStringBuilder();
 	HttpHost proxy;
 
 	private String API_KEY;
+	
+	// get heroes info
+	public Heroes GetHeroes() throws Dota2StatsAccessException {
+	    String queryString = API_GET_HEROS_URL + "key=" + API_KEY
+                + "&language=en_us";
+
+        Map<String, Object> map = doHttpGetAndConvertJsonToObject(queryString);
+
+        @SuppressWarnings("unchecked")
+        Heroes heroes = new Heroes(
+                (Map<String, Object>) map.get("result"));
+
+        return heroes;
+	}
 
 	@Override
 	public MatchHistory getMostRecentMatchHistory()
@@ -92,6 +109,22 @@ public class Dota2StatsImpl implements Dota2Stats {
 		return hist;
 
 	}
+	
+	@Override
+	public MatchHistory getMatchHistoryWithLevel(int level) throws Dota2StatsAccessException {
+	    String queryString = API_GET_MATCH_HISTORY_URL + "key=" + API_KEY
+                + "&skill=" + level;
+
+        Map<String, Object> map = doHttpGetAndConvertJsonToObject(queryString);
+
+        @SuppressWarnings("unchecked")
+        MatchHistory hist = new MatchHistoryImpl(
+                (Map<String, Object>) map.get("result"));
+
+        return hist;
+	    
+    }
+	
 
 	@Override
 	public MatchDetail getMatchDetails(long matchId)
