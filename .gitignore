@@ -1,33 +1,42 @@
+# Maven
+target/
+
+# Compiled classes
 *.class
 
-# Package Files #
+# Package files
+*.jar
 *.war
 *.ear
 
-*.pydevproject
+# IDE - Eclipse
 .project
 .metadata
-bin/**
-tmp/**
-tmp/**/*
+.classpath
+.settings/
+.loadpath
+.buildpath
+.externalToolBuilders/
+*.launch
+
+# IDE - IntelliJ
+.idea/
+*.iml
+
+# IDE - VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp / Backup
 *.tmp
 *.bak
 *.swp
 *~.nib
-local.properties
-.classpath
-.settings/
-.loadpath
 
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
-/bin
+# Legacy build artifacts
+bin/
+libs/
+export-cli-jar/
